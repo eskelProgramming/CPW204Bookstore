@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "removeComments": true,
+        "outDir": "./js",
+    }
+}
