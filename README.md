@@ -1,5 +1,9 @@
 # CPW 204 Bookstore
-This repository is a class example used to gain experience with source control and TypeScript.
+This repository is a class example used to gain 
+experience with source control and TypeScript.
+
+## Live Website
+Check out the live website hosted by [GitHub Pages](https://eskelprogramming.github.io/CPW204Bookstore/)
 
 ## Getting Started
 
