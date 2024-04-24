@@ -44,8 +44,19 @@ function getBook() {
         isValidData = false;
         releaseDateTextBox.nextElementSibling.textContent = "Release date must be a valid date";
     }
+    if (isValidData) {
+        let addedBook = new Book();
+        addedBook.isbn = isbn;
+        addedBook.title = title;
+        addedBook.price = price;
+        addedBook.releaseDate = new Date(releaseDate);
+        return addedBook;
+    }
+    return null;
 }
 function addBook(b) {
+    alert("Adding book data was valid, book added");
+    console.log(b);
 }
 function isValidISBN13(data) {
     let regex = /^\d{13}$/;
