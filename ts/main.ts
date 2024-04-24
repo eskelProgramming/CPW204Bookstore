@@ -68,10 +68,23 @@ function getBook():Book {
     let isbn:string = isbnTextBox.value;
     if(!isValidISBN13(isbn)) {
         isValidData = false;
-        isbnTextBox.nextElementSibling.innerHTML = "ISBN must be 13 digits only";
+        isbnTextBox.nextElementSibling.textContent = "ISBN must be 13 digits only";
     }
 
-    
+    // Validate the title
+    let title:string = titleTextBox.value;
+    if (title.trim() == "") {
+        isValidData = false;
+        titleTextBox.nextElementSibling.textContent = "You must provide a title";
+    }
+
+    // Validate the price
+    let price:number = parseFloat(priceTextBox.value);
+    if (isNaN(price) || price < 0) {
+        isValidData = false;
+        priceTextBox.nextElementSibling.textContent = "Price must be a positive number";
+    }
+
 }
 
 /**

@@ -25,7 +25,17 @@ function getBook() {
     let isbn = isbnTextBox.value;
     if (!isValidISBN13(isbn)) {
         isValidData = false;
-        isbnTextBox.nextElementSibling.innerHTML = "ISBN must be 13 digits only";
+        isbnTextBox.nextElementSibling.textContent = "ISBN must be 13 digits only";
+    }
+    let title = titleTextBox.value;
+    if (title.trim() == "") {
+        isValidData = false;
+        titleTextBox.nextElementSibling.textContent = "You must provide a title";
+    }
+    let price = parseFloat(priceTextBox.value);
+    if (isNaN(price) || price < 0) {
+        isValidData = false;
+        priceTextBox.nextElementSibling.textContent = "Price must be a positive number";
     }
 }
 function addBook(b) {
