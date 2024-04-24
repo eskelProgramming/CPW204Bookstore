@@ -55,6 +55,9 @@ function processBook() {
  * will be shown on the webpage.
  */
 function getBook():Book {
+    // Clear all error messages
+    clearAllErrorMessages();
+
     // Get all inputs
     let isbnTextBox = document.querySelector("#isbn") as HTMLInputElement;
     let titleTextBox = document.querySelector("#title") as HTMLInputElement;
@@ -113,4 +116,16 @@ function addBook(b:Book):void {
 function isValidISBN13(data:string):boolean {
     let regex = /^\d{13}$/; // match 13 digits exactly
     return regex.test(data);
+}
+
+/**
+ * Clears all the validation error messages spans
+ * in the form.
+ */
+function clearAllErrorMessages() {
+    // Get all the error spans
+    let allErrorMessages = document.querySelectorAll("form span.error-msg");
+
+    // Loop through each span and set the text content to an empty string
+    allErrorMessages.forEach(span => span.textContent = "");
 }

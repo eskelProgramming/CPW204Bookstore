@@ -17,6 +17,7 @@ function processBook() {
     }
 }
 function getBook() {
+    clearAllErrorMessages();
     let isbnTextBox = document.querySelector("#isbn");
     let titleTextBox = document.querySelector("#title");
     let priceTextBox = document.querySelector("#price");
@@ -49,4 +50,8 @@ function addBook(b) {
 function isValidISBN13(data) {
     let regex = /^\d{13}$/;
     return regex.test(data);
+}
+function clearAllErrorMessages() {
+    let allErrorMessages = document.querySelectorAll("form span.error-msg");
+    allErrorMessages.forEach(span => span.textContent = "");
 }
