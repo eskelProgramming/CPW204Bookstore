@@ -100,13 +100,27 @@ function getBook():Book {
 }
 
 /**
- * Adds a Book object to web storage. Assumes
+ * Adds a Book object to the webpage and to web storage. Assumes
  * all data is valid.
  * @param b The Book containing valid data to be added
  */
 function addBook(b:Book):void {
-    alert("Adding book data was valid, book added");
     console.log(b);
+
+    // Add the book to the webpage
+    let bookDiv:HTMLDivElement = document.createElement("div");
+
+    let titleHeading = document.createElement("h2");
+    titleHeading.textContent = `${b.title} : ${b.isbn}`;
+    // Add h2 to book div <div><h2>Title : ISBN</h2></div>
+    bookDiv.appendChild(titleHeading); 
+
+    let bookDescription = document.createElement("p");
+    bookDescription.textContent = `This book was released on ${b.releaseDate} and costs $${b.price}`;
+    bookDiv.appendChild(bookDescription);
+
+    // Add book div to the page
+    document.querySelector("#book-display").appendChild(bookDiv);
 }
 
 /**

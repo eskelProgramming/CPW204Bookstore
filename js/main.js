@@ -49,8 +49,15 @@ function getBook() {
     return null;
 }
 function addBook(b) {
-    alert("Adding book data was valid, book added");
     console.log(b);
+    let bookDiv = document.createElement("div");
+    let titleHeading = document.createElement("h2");
+    titleHeading.textContent = `${b.title} : ${b.isbn}`;
+    bookDiv.appendChild(titleHeading);
+    let bookDescription = document.createElement("p");
+    bookDescription.textContent = `This book was released on ${b.releaseDate} and costs $${b.price}`;
+    bookDiv.appendChild(bookDescription);
+    document.querySelector("#book-display").appendChild(bookDiv);
 }
 function isValidISBN13(data) {
     let regex = /^\d{13}$/;
