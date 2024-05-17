@@ -60,8 +60,8 @@ function addBook(b) {
         currency: 'USD',
         minimumFractionDigits: 2
     });
-    let formattefPrice = currencyFormatter.format(b.price);
-    bookDescription.textContent = `This book was released on ${b.releaseDate} and costs ${formattefPrice}`;
+    let formattedPrice = currencyFormatter.format(b.price);
+    bookDescription.textContent = `This book was released on ${b.releaseDate} and costs ${formattedPrice}`;
     bookDiv.appendChild(bookDescription);
     document.querySelector("#book-display").appendChild(bookDiv);
 }
