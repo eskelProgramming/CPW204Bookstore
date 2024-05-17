@@ -92,7 +92,17 @@ function getBook():Book {
         addedBook.isbn = isbn;
         addedBook.title = title;
         addedBook.price = price;
-        addedBook.releaseDate = new Date(releaseDate);
+
+        // The value of the <niput type="date"> is off by one day due to timezone issues
+        // Split date string into an array "YYYY-MM-DD"
+        // Result would be { "YYYY", "MM", "DD"}
+        const dateParts:string[] = releaseDate.split('-');
+        const year = parseInt(dateParts[0]);
+        const month = parseInt(dateParts[1]) - 1; // month is 0 based
+        const day = parseInt(dateParts[2]);
+        const correctDate = new Date(year, month, day);
+
+        addedBook.releaseDate = correctDate;
 
         return addedBook;
     }
