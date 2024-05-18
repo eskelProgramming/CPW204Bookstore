@@ -7,7 +7,8 @@ window.onload = function () {
 function processBook() {
     let userBook = getBook();
     if (userBook != null) {
-        addBook(userBook);
+        addBookToWebpage(userBook);
+        addBookToStorage(userBook);
     }
 }
 function getBook() {
@@ -53,7 +54,7 @@ function getBook() {
     }
     return null;
 }
-function addBook(b) {
+function addBookToWebpage(b) {
     console.log(b);
     let bookDiv = document.createElement("div");
     let titleHeading = document.createElement("h2");
@@ -69,6 +70,18 @@ function addBook(b) {
     bookDescription.textContent = `This book was released on ${b.releaseDate} and costs ${formattedPrice}`;
     bookDiv.appendChild(bookDescription);
     document.querySelector("#book-display").appendChild(bookDiv);
+}
+function addBookToStorage(b) {
+    const BookStorageKey = "Books";
+    let bookData = localStorage.getItem(BookStorageKey);
+    if (bookData == null) {
+        let books = [];
+        books.push(b);
+        bookData = JSON.stringify(books);
+        localStorage.setItem(BookStorageKey, bookData);
+    }
+    else {
+    }
 }
 function isValidISBN13(data) {
     let regex = /^\d{13}$/;

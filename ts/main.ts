@@ -33,7 +33,8 @@ window.onload = function() {
 function processBook() {
     let userBook = getBook();
     if(userBook != null) {
-        addBook(userBook);
+        addBookToWebpage(userBook);
+        addBookToStorage(userBook);
     }
 }
 
@@ -93,7 +94,7 @@ function getBook():Book {
         addedBook.title = title;
         addedBook.price = price;
 
-        // The value of the <niput type="date"> is off by one day due to timezone issues
+        // The value of the <input type="date"> is off by one day due to timezone issues
         // Split date string into an array "YYYY-MM-DD"
         // Result would be { "YYYY", "MM", "DD"}
         const dateParts:string[] = releaseDate.split('-');
@@ -110,11 +111,11 @@ function getBook():Book {
 }
 
 /**
- * Adds a Book object to the webpage and to web storage. Assumes
+ * Adds a Book object to the webpage. Assumes
  * all data is valid.
  * @param b The Book containing valid data to be added
  */
-function addBook(b:Book):void {
+function addBookToWebpage(b:Book):void {
     console.log(b);
 
     // Add the book to the webpage
@@ -137,6 +138,32 @@ function addBook(b:Book):void {
 
     // Add book div to the page
     document.querySelector("#book-display").appendChild(bookDiv);
+}
+
+/**
+ * Adds a single Book object to existing Book list in storage.
+ * If no list exists, a new list is created and sorted.
+ * @param b The Book to add to localStorage
+ */
+function addBookToStorage(b:Book):void {
+    const BookStorageKey = "Books";
+    // Read the existing books from storage
+    let bookData = localStorage.getItem(BookStorageKey);
+
+    // If the data is, the "Books" key did not exist in storage
+    if (bookData == null) {
+        // Create a new list and add the book
+        let books:Book[] = [];
+        books.push(b);
+
+        // Add to localStorage
+        bookData = JSON.stringify(books);
+        localStorage.setItem(BookStorageKey, bookData);
+    }
+    else {
+        // Parse string into a list of books and add new book to the list
+        // store the newly modified list back into storage
+    }
 }
 
 /**
