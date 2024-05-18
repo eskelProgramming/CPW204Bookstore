@@ -5,26 +5,26 @@ class Book {
     /**
      * The 13 digit ISBN number
      */
-    isbn : string;
+    isbn: string;
 
     /**
      * The title of the book
      */
-    title : string;
+    title: string;
 
     /**
      * The retail price of the individual book
      */
-    price : number;
+    price: number;
 
     /**
      * The date the book was first published. This could 
      * be a future date, if the book is not yet released.
      */
-    releaseDate : Date;
+    releaseDate: Date;
 }
 
-window.onload = function() {
+window.onload = function () {
     // Set up the button click for add book form
     let addBookBtn = document.querySelector("#add-book") as HTMLButtonElement;
     addBookBtn.onclick = processBook;
@@ -32,7 +32,7 @@ window.onload = function() {
 
 function processBook() {
     let userBook = getBook();
-    if(userBook != null) {
+    if (userBook != null) {
         addBookToWebpage(userBook);
         addBookToStorage(userBook);
     }
@@ -45,7 +45,7 @@ function processBook() {
  * invalid, null will be returned and error messages
  * will be shown on the webpage.
  */
-function getBook():Book {
+function getBook(): Book {
     // Clear all error messages
     clearAllErrorMessages();
 
@@ -56,24 +56,24 @@ function getBook():Book {
     let releaseDateTextBox = document.querySelector("#release-date") as HTMLInputElement;
 
     // Validate data
-    let isValidData:boolean = true;
+    let isValidData: boolean = true;
 
     // Validate the ISBN
-    let isbn:string = isbnTextBox.value;
-    if(!isValidISBN13(isbn)) {
+    let isbn: string = isbnTextBox.value;
+    if (!isValidISBN13(isbn)) {
         isValidData = false;
         isbnTextBox.nextElementSibling.textContent = "ISBN must be 13 digits only";
     }
 
     // Validate the title
-    let title:string = titleTextBox.value;
+    let title: string = titleTextBox.value;
     if (title.trim() == "") {
         isValidData = false;
         titleTextBox.nextElementSibling.textContent = "You must provide a title";
     }
 
     // Validate the price
-    let price:number = parseFloat(priceTextBox.value);
+    let price: number = parseFloat(priceTextBox.value);
     if (isNaN(price) || price < 0) {
         isValidData = false;
         priceTextBox.nextElementSibling.textContent = "Price must be a positive number";
@@ -97,7 +97,7 @@ function getBook():Book {
         // The value of the <input type="date"> is off by one day due to timezone issues
         // Split date string into an array "YYYY-MM-DD"
         // Result would be { "YYYY", "MM", "DD"}
-        const dateParts:string[] = releaseDate.split('-');
+        const dateParts: string[] = releaseDate.split('-');
         const year = parseInt(dateParts[0]);
         const month = parseInt(dateParts[1]) - 1; // month is 0 based
         const day = parseInt(dateParts[2]);
@@ -115,16 +115,16 @@ function getBook():Book {
  * all data is valid.
  * @param b The Book containing valid data to be added
  */
-function addBookToWebpage(b:Book):void {
+function addBookToWebpage(b: Book): void {
     console.log(b);
 
     // Add the book to the webpage
-    let bookDiv:HTMLDivElement = document.createElement("div");
+    let bookDiv: HTMLDivElement = document.createElement("div");
 
     let titleHeading = document.createElement("h2");
     titleHeading.textContent = `${b.title} : ${b.isbn}`;
     // Add h2 to book div <div><h2>Title : ISBN</h2></div>
-    bookDiv.appendChild(titleHeading); 
+    bookDiv.appendChild(titleHeading);
 
     let bookDescription = document.createElement("p");
     const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -145,33 +145,21 @@ function addBookToWebpage(b:Book):void {
  * If no list exists, a new list is created and sorted.
  * @param b The Book to add to localStorage
  */
-function addBookToStorage(b:Book):void {
+function addBookToStorage(b: Book): void {
     const BookStorageKey = "Books";
     // Read the existing books from storage
     let bookData = localStorage.getItem(BookStorageKey);
 
-    // If the data is, the "Books" key did not exist in storage
-    if (bookData == null) {
-        // Create a new list and add the book
-        let books:Book[] = [];
-        books.push(b);
+    // Initialize with existing bookData if is not null, or an empty array
+    // This is a JS ternary/conditional operator
+    let books: Book[] = bookData ? JSON.parse(bookData) : [];
 
-        // Add to localStorage
-        bookData = JSON.stringify(books);
-        localStorage.setItem(BookStorageKey, bookData);
-    }
-    else {
-        // Parse string into a list of books and add new book to the list
-        // store the newly modified list back into storage
-        let books:Book[] = JSON.parse(bookData);
+    // Add the new book to the list
+    books.push(b);
 
-        // Add new book to the list
-        books.push(b);
-
-        // Add back to localStorage
-        bookData = JSON.stringify(books);
-        localStorage.setItem(BookStorageKey, bookData);
-    }
+    // Add to localStorage
+    bookData = JSON.stringify(books);
+    localStorage.setItem(BookStorageKey, bookData);
 }
 
 /**
@@ -180,7 +168,7 @@ function addBookToStorage(b:Book):void {
  * @param isbn The ISBN number to validate
  * @returns True if the ISBN is valid, false otherwise
  */
-function isValidISBN13(data:string):boolean {
+function isValidISBN13(data: string): boolean {
     let regex = /^\d{13}$/; // match 13 digits exactly
     return regex.test(data);
 }
